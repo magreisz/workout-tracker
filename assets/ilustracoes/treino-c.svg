@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="title desc">
+<title>Ilustração de treino C - pernas</title><desc>Ilustração estilizada de uma pessoa usando leg press.</desc>
+<rect width="720" height="300" rx="24" fill="#111827"/>
+<circle cx="610" cy="70" r="34" fill="#1f2937"/>
+<path d="M40 244 H680" stroke="#374151" stroke-width="3" stroke-linecap="round"/>
+<g stroke="#e5e7eb" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none">
+
+<path d="M260 210 L440 210" stroke="#9ca3af" stroke-width="14"/>
+<path d="M285 190 L340 145 L390 165" />
+<circle cx="335" cy="125" r="19" fill="#e5e7eb" stroke="none"/>
+<path d="M340 147 L390 165 L430 120"/>
+<path d="M390 165 L420 205"/>
+<path d="M430 120 L465 90" stroke="#60a5fa" stroke-width="12"/>
+<path d="M470 75 L490 105 M490 75 L470 105" stroke="#60a5fa" stroke-width="8"/>
+<path d="M260 190 L230 230 M440 210 L465 230" stroke="#9ca3af" stroke-width="10"/>
+
+</g>
+<g fill="#93c5fd"><circle cx="75" cy="66" r="5"/><circle cx="96" cy="66" r="5"/><circle cx="117" cy="66" r="5"/></g>
+<text x="40" y="282" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#9ca3af">TREINO C  •  PERNAS / OMBROS / ABDÔMEN</text>
+</svg>

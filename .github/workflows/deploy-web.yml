@@ -1,0 +1,59 @@
+name: Publicar app (GitHub Pages)
+
+# Gera a versão web do app (Expo) e publica no GitHub Pages.
+# Depois de publicado, basta abrir o link no iPhone e "Adicionar à Tela de Início".
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garante uma publicação por vez.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Exportar app web
+        run: npx expo export --platform web --output-dir dist
+
+      - name: Ajustar para single-page app
+        # GitHub Pages usa 404.html como fallback; copiamos o index para evitar 404 ao recarregar.
+        run: cp dist/index.html dist/404.html
+
+      - name: Enviar artefato
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

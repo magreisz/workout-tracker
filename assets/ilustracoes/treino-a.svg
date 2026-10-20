@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="title desc">
+<title>Ilustração de treino A - empurrar</title><desc>Ilustração estilizada de uma pessoa usando uma máquina de supino.</desc>
+<rect width="720" height="300" rx="24" fill="#111827"/>
+<circle cx="610" cy="70" r="34" fill="#1f2937"/>
+<path d="M40 244 H680" stroke="#374151" stroke-width="3" stroke-linecap="round"/>
+<g stroke="#e5e7eb" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none">
+
+<circle cx="330" cy="95" r="20" fill="#e5e7eb" stroke="none"/>
+<path d="M330 118 L330 170 L375 190"/>
+<path d="M330 135 L280 150 L245 130"/>
+<path d="M330 135 L382 150 L420 130"/>
+<path d="M285 183 H415" stroke="#60a5fa" stroke-width="16"/>
+<path d="M260 170 V225 M440 170 V225" stroke="#9ca3af" stroke-width="10"/>
+<path d="M225 126 H250 M415 126 H445" stroke="#60a5fa" stroke-width="9"/>
+<path d="M220 111 V142 M450 111 V142" stroke="#60a5fa" stroke-width="7"/>
+
+</g>
+<g fill="#93c5fd"><circle cx="75" cy="66" r="5"/><circle cx="96" cy="66" r="5"/><circle cx="117" cy="66" r="5"/></g>
+<text x="40" y="282" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#9ca3af">TREINO A  •  PEITO / OMBROS / TRÍCEPS</text>
+</svg>

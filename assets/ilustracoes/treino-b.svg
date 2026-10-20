@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="title desc">
+<title>Ilustração de treino B - puxar</title><desc>Ilustração estilizada de uma pessoa fazendo puxada frontal na polia.</desc>
+<rect width="720" height="300" rx="24" fill="#111827"/>
+<circle cx="610" cy="70" r="34" fill="#1f2937"/>
+<path d="M40 244 H680" stroke="#374151" stroke-width="3" stroke-linecap="round"/>
+<g stroke="#e5e7eb" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none">
+
+<circle cx="355" cy="100" r="20" fill="#e5e7eb" stroke="none"/>
+<path d="M355 124 L355 176 L330 205"/>
+<path d="M355 136 L310 120 L285 85"/>
+<path d="M355 136 L400 120 L425 85"/>
+<path d="M250 70 H460" stroke="#60a5fa" stroke-width="10"/>
+<path d="M270 50 V220 M440 50 V220" stroke="#9ca3af" stroke-width="9"/>
+<path d="M270 50 H440" stroke="#9ca3af" stroke-width="9"/>
+<path d="M285 85 L425 85" stroke="#60a5fa" stroke-width="8"/>
+<path d="M300 220 H410" stroke="#9ca3af" stroke-width="12"/>
+
+</g>
+<g fill="#93c5fd"><circle cx="75" cy="66" r="5"/><circle cx="96" cy="66" r="5"/><circle cx="117" cy="66" r="5"/></g>
+<text x="40" y="282" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#9ca3af">TREINO B  •  COSTAS / BÍCEPS / ABDÔMEN</text>
+</svg>
