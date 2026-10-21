@@ -22,8 +22,13 @@ async function lerJson(chave, padrao) {
 //   treinoId: "A" | "B" | "C",
 //   data: ISO string,
 //   duracaoSegundos: number,
-//   itens: [{ exercicioId, nome, carga, seriesFeitas, seriesAlvo, reps, obs }]
+//   itens: [{
+//     exercicioId, nome, obs,
+//     series: [{ kg, reps, feita }],  // série por série (sessões antigas não têm)
+//     carga, seriesFeitas, seriesAlvo, reps  // resumo: maior carga e reps "12, 10, 9"
+//   }]
 // }
+// Para ler as séries de qualquer sessão (nova ou antiga) use seriesDoItem em metricas.js.
 export async function listarSessoes() {
   const sessoes = await lerJson(CHAVE_SESSOES, []);
   // Mais recentes primeiro.

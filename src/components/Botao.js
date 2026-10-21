@@ -6,31 +6,27 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { cores } from "../theme";
 
 const estilos = {
-  primario: { fundo: cores.primaria, texto: cores.branco, borda: cores.primaria },
-  secundario: { fundo: cores.branco, texto: cores.primaria, borda: cores.primaria },
-  perigo: { fundo: cores.branco, texto: cores.perigo, borda: cores.perigo },
-  escuro: { fundo: cores.escuro, texto: cores.branco, borda: cores.escuro },
+  primario: { fundo: cores.destaque, texto: cores.branco },
+  secundario: { fundo: cores.elevada, texto: cores.texto },
+  sucesso: { fundo: cores.sucesso, texto: cores.sucessoTexto },
+  perigo: { fundo: "rgba(255,90,95,0.12)", texto: cores.perigo },
 };
 
 const Toque = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  min-height: 46px;
-  padding: 0 16px;
-  border-radius: 10px;
-  border-width: 2px;
-  border-color: ${(p) => p.$estilo.borda};
+  min-height: ${(p) => (p.$compacto ? "38px" : "52px")};
+  padding: 0 ${(p) => (p.$compacto ? "14px" : "18px")};
+  border-radius: ${(p) => (p.$compacto ? "10px" : "14px")};
   background-color: ${(p) => p.$estilo.fundo};
   opacity: ${(p) => (p.disabled ? 0.6 : 1)};
-  margin-vertical: 6px;
 `;
 
 const Texto = styled.Text`
   color: ${(p) => p.$cor};
-  font-size: 15px;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-size: ${(p) => (p.$compacto ? "14px" : "16px")};
+  font-weight: 700;
   margin-left: ${(p) => (p.$comIcone ? "8px" : "0px")};
 `;
 
@@ -41,6 +37,7 @@ export default function Botao({
   icone,
   carregando = false,
   disabled = false,
+  compacto = false,
   style,
 }) {
   const estilo = estilos[variante];
@@ -49,6 +46,7 @@ export default function Botao({
   return (
     <Toque
       $estilo={estilo}
+      $compacto={compacto}
       onPress={onPress}
       disabled={bloqueado}
       activeOpacity={0.8}
@@ -60,8 +58,10 @@ export default function Botao({
         <ActivityIndicator color={estilo.texto} />
       ) : (
         <>
-          {icone ? <MaterialIcons name={icone} size={20} color={estilo.texto} /> : null}
-          <Texto $cor={estilo.texto} $comIcone={Boolean(icone)}>
+          {icone ? (
+            <MaterialIcons name={icone} size={compacto ? 18 : 20} color={estilo.texto} />
+          ) : null}
+          <Texto $cor={estilo.texto} $comIcone={Boolean(icone)} $compacto={compacto}>
             {titulo}
           </Texto>
         </>

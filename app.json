@@ -5,14 +5,14 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "primaryColor": "#2F6FED",
+    "userInterfaceStyle": "dark",
+    "primaryColor": "#3D8BFF",
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#2F6FED",
+        "backgroundColor": "#0B0C0F",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -22,8 +22,8 @@
       "favicon": "./assets/favicon.png",
       "name": "Meu Treino",
       "shortName": "Treino",
-      "themeColor": "#2F6FED",
-      "backgroundColor": "#2F6FED",
+      "themeColor": "#0B0C0F",
+      "backgroundColor": "#0B0C0F",
       "display": "standalone",
       "orientation": "portrait"
     },
@@ -32,6 +32,7 @@
     ],
     "experiments": {
       "baseUrl": "/workout-tracker"
-    }
+    },
+    "backgroundColor": "#0B0C0F"
   }
 }

@@ -3,54 +3,69 @@ import { Platform, Vibration } from "react-native";
 import styled from "styled-components/native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import { cores } from "../theme";
+import Vidro from "./Vidro";
+import { cores, formatarCronometro } from "../theme";
 
-const Barra = styled.View`
-  flex-direction: row;
-  align-items: center;
-  background-color: ${cores.escuro};
-  border-radius: 14px;
-  padding: 10px 12px;
+// Barra de descanso fixa no rodapé da tela de treino: vidro com um tom azul (descansando)
+// ou verde (concluído) por cima.
+const Tom = styled.View`
+  padding: 12px 12px 12px 16px;
+  background-color: ${(p) => (p.$concluido ? "rgba(47,210,122,0.16)" : "rgba(61,139,255,0.16)")};
 `;
 
-const Info = styled.View``;
+const Linha = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
 
-const Tempo = styled.Text`
-  color: ${cores.branco};
-  font-size: 30px;
-  font-weight: bold;
-  min-width: 92px;
+const Info = styled.View`
+  flex: 1;
 `;
 
 const Legenda = styled.Text`
-  color: #cbd5e1;
+  color: ${cores.textoMedio};
   font-size: 12px;
-  margin-top: 2px;
 `;
 
-const Controles = styled.View`
-  flex-direction: row;
-  align-items: center;
-  margin-left: auto;
+const Tempo = styled.Text`
+  color: ${cores.texto};
+  font-size: 26px;
+  font-weight: 800;
+  font-variant: tabular-nums;
 `;
 
-const BotaoRedondo = styled.TouchableOpacity`
-  width: 40px;
+const BotaoAjuste = styled.TouchableOpacity`
   height: 40px;
-  border-radius: 20px;
+  min-width: 46px;
+  padding: 0 10px;
+  border-radius: 10px;
   align-items: center;
   justify-content: center;
-  background-color: ${(p) => (p.$destaque ? cores.primaria : "rgba(255,255,255,0.12)")};
-  margin-left: 8px;
+  background-color: ${(p) => (p.$destaque ? cores.destaque : "rgba(255,255,255,0.12)")};
+  margin-left: 6px;
 `;
 
-function formatar(segundos) {
-  const m = Math.floor(segundos / 60);
-  const s = segundos % 60;
-  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-}
+const TextoAjuste = styled.Text`
+  color: ${cores.texto};
+  font-size: 13px;
+  font-weight: 700;
+`;
 
-export default function Cronometro({ segundosIniciais = 60, onFechar }) {
+const Trilha = styled.View`
+  height: 4px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-top: 10px;
+  overflow: hidden;
+`;
+
+const Progresso = styled.View`
+  height: 4px;
+  background-color: ${(p) => (p.$concluido ? cores.sucesso : cores.destaque)};
+`;
+
+export default function Cronometro({ segundosIniciais = 60, legenda, onFechar }) {
+  const [total, setTotal] = useState(segundosIniciais);
   const [restante, setRestante] = useState(segundosIniciais);
   const [rodando, setRodando] = useState(true);
   const avisou = useRef(false);
@@ -78,40 +93,57 @@ export default function Cronometro({ segundosIniciais = 60, onFechar }) {
   const ajustar = (delta) => {
     avisou.current = false;
     setRestante((atual) => Math.max(0, atual + delta));
+    setTotal((atual) => Math.max(1, atual + delta));
     if (delta > 0) {
       setRodando(true);
     }
   };
 
   const concluido = restante === 0;
+  const fracao = total > 0 ? 1 - restante / total : 1;
 
   return (
-    <Barra>
-      <Info>
-        <Tempo>{formatar(restante)}</Tempo>
-        <Legenda>{concluido ? "Descanso concluído" : "Descanso em andamento"}</Legenda>
-      </Info>
-      <Controles>
-        <BotaoRedondo onPress={() => ajustar(-15)} accessibilityLabel="Tirar 15 segundos">
-          <MaterialIcons name="remove" size={22} color={cores.branco} />
-        </BotaoRedondo>
-        <BotaoRedondo
-          $destaque
-          onPress={() => {
-            avisou.current = false;
-            setRodando((v) => !v);
-          }}
-          accessibilityLabel={rodando ? "Pausar" : "Retomar"}
-        >
-          <MaterialIcons name={rodando ? "pause" : "play-arrow"} size={24} color={cores.branco} />
-        </BotaoRedondo>
-        <BotaoRedondo onPress={() => ajustar(15)} accessibilityLabel="Adicionar 15 segundos">
-          <MaterialIcons name="add" size={22} color={cores.branco} />
-        </BotaoRedondo>
-        <BotaoRedondo onPress={onFechar} accessibilityLabel="Fechar cronômetro">
-          <MaterialIcons name="close" size={22} color={cores.branco} />
-        </BotaoRedondo>
-      </Controles>
-    </Barra>
+    <Vidro
+      intensidade="leve"
+      style={{
+        borderRadius: 20,
+        borderColor: concluido ? "rgba(47,210,122,0.45)" : "rgba(61,139,255,0.4)",
+        shadowColor: "#000",
+        shadowOpacity: 0.4,
+        shadowRadius: 18,
+        shadowOffset: { width: 0, height: 8 },
+      }}
+    >
+      <Tom $concluido={concluido}>
+        <Linha>
+          <Info>
+            <Legenda>
+              {concluido ? "Descanso concluído · próxima série" : legenda || "Descansando"}
+            </Legenda>
+            <Tempo>{formatarCronometro(restante)}</Tempo>
+          </Info>
+          <BotaoAjuste onPress={() => ajustar(-15)} accessibilityLabel="Tirar 15 segundos">
+            <TextoAjuste>−15</TextoAjuste>
+          </BotaoAjuste>
+          <BotaoAjuste onPress={() => ajustar(15)} accessibilityLabel="Adicionar 15 segundos">
+            <TextoAjuste>+15</TextoAjuste>
+          </BotaoAjuste>
+          <BotaoAjuste
+            $destaque={!concluido}
+            onPress={onFechar}
+            accessibilityLabel={concluido ? "Fechar descanso" : "Pular descanso"}
+          >
+            {concluido ? (
+              <MaterialIcons name="close" size={20} color={cores.texto} />
+            ) : (
+              <TextoAjuste>Pular</TextoAjuste>
+            )}
+          </BotaoAjuste>
+        </Linha>
+        <Trilha>
+          <Progresso $concluido={concluido} style={{ width: `${Math.min(100, fracao * 100)}%` }} />
+        </Trilha>
+      </Tom>
+    </Vidro>
   );
 }
