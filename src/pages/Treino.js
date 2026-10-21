@@ -24,6 +24,7 @@ import { buscarTreino } from "../data/treinos";
 import { mapaUltimosRegistros, salvarSessao } from "../services/storage";
 import { seriesDoItem } from "../services/metricas";
 import { avisar, confirmar } from "../utils/mensagens";
+import { espacoTopo } from "../utils/layout";
 
 const Container = styled.View`
   flex: 1;
@@ -577,7 +578,7 @@ export default function Treino() {
           top: 0,
           left: 0,
           right: 0,
-          paddingTop: Math.max(insets.top, 12),
+          paddingTop: espacoTopo(insets),
           borderBottomWidth: 1,
           borderBottomColor: "rgba(255,255,255,0.08)",
         }}

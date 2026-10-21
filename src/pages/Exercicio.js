@@ -32,6 +32,7 @@ import { todosExercicios } from "../data/treinos";
 import { detalheDoExercicio } from "../data/exercicios";
 import { listarSessoes } from "../services/storage";
 import { estatisticasDoExercicio } from "../services/metricas";
+import { espacoTopo } from "../utils/layout";
 
 const Container = styled.View`
   flex: 1;
@@ -219,10 +220,10 @@ export default function Exercicio() {
   return (
     <Container>
       <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 24 }}>
-        <Midia style={{ paddingTop: Math.max(insets.top, 12) }}>
+        <Midia style={{ paddingTop: espacoTopo(insets) }}>
           <GifExercicio chave={exercicio.chave} tamanho={300} raio={0} />
           <BotaoVoltar
-            style={{ top: Math.max(insets.top, 12) + 4 }}
+            style={{ top: espacoTopo(insets) }}
             onPress={() => navigation.goBack()}
             accessibilityLabel="Voltar"
           >

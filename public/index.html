@@ -16,19 +16,24 @@
     <meta name="apple-mobile-web-app-title" content="Meu Treino" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <style id="expo-reset">
+      /* No iPhone instalado com a barra de status translúcida, "100%" desconta a barra de status
+         e sobra uma faixa preta embaixo; 100vh é a altura real da tela. */
       html,
       body {
         height: 100%;
+        height: 100vh;
         background-color: #0b0c0f;
         color-scheme: dark;
       }
       body {
+        margin: 0;
         overflow: hidden;
         -webkit-tap-highlight-color: transparent;
       }
       #root {
         display: flex;
         height: 100%;
+        height: 100vh;
         flex: 1;
       }
     </style>

@@ -11,6 +11,7 @@ import Progresso from "./Progresso";
 import Vidro from "../components/Vidro";
 import { cores } from "../theme";
 import { listarSessoes } from "../services/storage";
+import { espacoTopo } from "../utils/layout";
 
 const abas = [
   {
@@ -95,7 +96,7 @@ export default function Inicio() {
         sessoes={sessoes}
         carregando={carregando}
         recarregar={carregar}
-        topo={Math.max(insets.top, 16) + 8}
+        topo={espacoTopo(insets, 24)}
         fim={baseBarra + ALTURA_BARRA + 24}
       />
 
