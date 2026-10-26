@@ -15,6 +15,7 @@ import {
   Sobretitulo,
   Subtitulo,
   TextoMedio,
+  TextoSuave,
   Titulo,
 } from "../components/ui";
 import { cores, corDoGrupo, nomeDoGrupo, raio } from "../theme";
@@ -66,6 +67,7 @@ export default function Exercicios({ topo, fim }) {
                   <LetraTexto>{treino.id}</LetraTexto>
                 </Letra>
                 <Subtitulo>{treino.foco}</Subtitulo>
+                <TextoSuave style={{ fontSize: 13 }}>{treino.diaSugerido}</TextoSuave>
               </TituloTreino>
             </CabecalhoSecao>
             {treino.exercicios.map((ex) => (

@@ -291,7 +291,8 @@ export default function Hoje({ sessoes, topo, fim }) {
                 <PlanoInfo>
                   <Subtitulo style={{ fontSize: 15.5 }}>{treino.foco}</Subtitulo>
                   <TextoMedio style={{ fontSize: 13, marginTop: 2 }}>
-                    {treino.exercicios.length} exercícios · {totalSeries(treino)} séries
+                    {treino.diaSugerido} · {treino.exercicios.length} exercícios ·{" "}
+                    {totalSeries(treino)} séries
                   </TextoMedio>
                   <TextoSuave
                     style={{ marginTop: 4, color: proximo ? cores.sucesso : cores.textoSuave }}

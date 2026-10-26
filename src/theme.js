@@ -31,8 +31,7 @@ export const grupos = {
   costas: { nome: "Costas", cor: "#2FD27A" },
   biceps: { nome: "Bíceps", cor: "#FBBF24" },
   abdomen: { nome: "Abdômen", cor: "#F472B6" },
-  pernas: { nome: "Pernas", cor: "#FF7A45" },
-  panturrilha: { nome: "Panturrilha", cor: "#FB923C" },
+  trapezio: { nome: "Trapézio", cor: "#C084FC" },
 };
 
 // Como o descanso costuma variar conforme o tipo de exercício (ver README).

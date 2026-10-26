@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Platform, Vibration } from "react-native";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -29,7 +28,7 @@ const Legenda = styled.Text`
 
 const Tempo = styled.Text`
   color: ${cores.texto};
-  font-size: 26px;
+  font-size: 34px;
   font-weight: 800;
   font-variant: tabular-nums;
 `;
@@ -65,38 +64,27 @@ const Progresso = styled.View`
 `;
 
 export default function Cronometro({ segundosIniciais = 60, legenda, onFechar }) {
+  // O tempo é calculado pelo horário de término, e não por "tiques": com a tela bloqueada o
+  // iPhone pausa o app, e ao voltar o cronômetro já mostra o tempo certo.
   const [total, setTotal] = useState(segundosIniciais);
-  const [restante, setRestante] = useState(segundosIniciais);
-  const [rodando, setRodando] = useState(true);
-  const avisou = useRef(false);
+  const [fim, setFim] = useState(() => Date.now() + segundosIniciais * 1000);
+  const [agora, setAgora] = useState(Date.now());
+
+  const restante = Math.max(0, Math.ceil((fim - agora) / 1000));
 
   useEffect(() => {
-    if (!rodando || restante <= 0) {
+    if (restante <= 0) {
       return undefined;
     }
-    const intervalo = setInterval(() => {
-      setRestante((atual) => Math.max(0, atual - 1));
-    }, 1000);
+    const intervalo = setInterval(() => setAgora(Date.now()), 250);
     return () => clearInterval(intervalo);
-  }, [rodando, restante]);
-
-  useEffect(() => {
-    if (restante === 0 && !avisou.current) {
-      avisou.current = true;
-      setRodando(false);
-      if (Platform.OS !== "web") {
-        Vibration.vibrate(600);
-      }
-    }
   }, [restante]);
 
   const ajustar = (delta) => {
-    avisou.current = false;
-    setRestante((atual) => Math.max(0, atual + delta));
+    const base = Date.now();
+    setFim((atual) => Math.max(base, Math.max(atual, base) + delta * 1000));
     setTotal((atual) => Math.max(1, atual + delta));
-    if (delta > 0) {
-      setRodando(true);
-    }
+    setAgora(base);
   };
 
   const concluido = restante === 0;

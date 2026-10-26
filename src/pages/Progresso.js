@@ -33,6 +33,13 @@ import { confirmar } from "../utils/mensagens";
 
 const DIAS = ["S", "T", "Q", "Q", "S", "S", "D"];
 
+// Sessões salvas antes da troca de plano (sem pernas) não guardam o foco: mostra o do plano antigo.
+const FOCO_PLANO_ANTIGO = {
+  A: "Peito, ombros e tríceps",
+  B: "Costas, bíceps e abdômen",
+  C: "Pernas, ombros e abdômen",
+};
+
 const Grande = styled.Text`
   font-size: 26px;
   font-weight: 800;
@@ -325,7 +332,7 @@ export default function Progresso({ sessoes, recarregar, topo, fim }) {
                       <LetraTexto>{sessao.treinoId}</LetraTexto>
                     </Letra>
                     <Subtitulo style={{ flex: 1, fontSize: 15 }} numberOfLines={1}>
-                      {treino?.foco || "Treino"}
+                      {sessao.foco || FOCO_PLANO_ANTIGO[sessao.treinoId] || "Treino"}
                     </Subtitulo>
                     <TextoSuave>{formatarDiaCurto(sessao.data)}</TextoSuave>
                     <BotaoApagar onPress={() => apagar(sessao)} accessibilityLabel="Apagar treino">

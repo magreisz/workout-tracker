@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 
 import Botao from "../components/Botao";
@@ -25,6 +25,7 @@ import { mapaUltimosRegistros, salvarSessao } from "../services/storage";
 import { seriesDoItem } from "../services/metricas";
 import { avisar, confirmar } from "../utils/mensagens";
 import { espacoTopo } from "../utils/layout";
+import { useTelaLigada } from "../utils/telaLigada";
 
 const Container = styled.View`
   flex: 1;
@@ -43,7 +44,8 @@ const BotaoVoltar = styled.TouchableOpacity`
   border-radius: 12px;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: ${(p) => (p.$ativo ? cores.destaqueSuave : "rgba(255, 255, 255, 0.1)")};
+  margin-right: ${(p) => (p.$espaco ? "8px" : "0px")};
 `;
 
 const TopoInfo = styled.View`
@@ -374,6 +376,9 @@ export default function Treino() {
   const [salvando, setSalvando] = useState(false);
   const [inicio] = useState(() => Date.now());
   const [alturaTopo, setAlturaTopo] = useState(120);
+  // Tela ligada durante o treino: dá para ver o descanso sem desbloquear o celular.
+  const [manterLigada, setManterLigada] = useState(true);
+  const tela = useTelaLigada(manterLigada);
 
   useEffect(() => {
     if (!treino) {
@@ -430,6 +435,7 @@ export default function Treino() {
       }));
       // Concluir uma série já inicia o descanso do tipo do exercício.
       if (nova.feita) {
+        tela.renovar();
         setDescanso({
           id: `${exercicio.id}-${Date.now()}`,
           segundos: tiposExercicio[exercicio.tipo].descanso,
@@ -437,7 +443,7 @@ export default function Treino() {
         });
       }
     },
-    [series, anteriores],
+    [series, anteriores, tela.renovar],
   );
 
   const adicionarSerie = useCallback((exercicioId) => {
@@ -503,6 +509,7 @@ export default function Treino() {
       const sessao = {
         id: `${Date.now()}`,
         treinoId: treino.id,
+        foco: treino.foco,
         data: new Date().toISOString(),
         duracaoSegundos: Math.round((Date.now() - inicio) / 1000),
         itens: treino.exercicios.map((ex) => {
@@ -584,9 +591,24 @@ export default function Treino() {
         }}
       >
         <Topo>
-          <BotaoVoltar onPress={sair} accessibilityLabel="Sair do treino">
+          <BotaoVoltar $espaco onPress={sair} accessibilityLabel="Sair do treino">
             <MaterialIcons name="close" size={20} color={cores.texto} />
           </BotaoVoltar>
+          {tela.suportado ? (
+            <BotaoVoltar
+              $ativo={tela.ligada}
+              onPress={() => setManterLigada((v) => !v)}
+              accessibilityRole="switch"
+              accessibilityState={{ checked: manterLigada }}
+              accessibilityLabel="Manter a tela ligada durante o treino"
+            >
+              <MaterialCommunityIcons
+                name={tela.ligada ? "cellphone-screenshot" : "cellphone-off"}
+                size={20}
+                color={tela.ligada ? cores.destaque : cores.textoMedio}
+              />
+            </BotaoVoltar>
+          ) : null}
           <TopoInfo>
             <TopoLegenda>{treino.titulo}</TopoLegenda>
             <TempoDecorrido inicio={inicio} />

@@ -28,7 +28,7 @@ import {
   nomeDoGrupo,
   tiposExercicio,
 } from "../theme";
-import { todosExercicios } from "../data/treinos";
+import { idsDoMovimento, todosExercicios } from "../data/treinos";
 import { detalheDoExercicio } from "../data/exercicios";
 import { listarSessoes } from "../services/storage";
 import { estatisticasDoExercicio } from "../services/metricas";
@@ -190,9 +190,7 @@ export default function Exercicio() {
         return;
       }
       listarSessoes().then((sessoes) => {
-        const ids = todosExercicios()
-          .filter((e) => e.chave === exercicio.chave)
-          .map((e) => e.id);
+        const ids = idsDoMovimento(exercicio.chave);
         const porId = ids.map((id) => estatisticasDoExercicio(sessoes, id));
         setEstatisticas({
           maiorCarga: Math.max(...porId.map((e) => e.maiorCarga)),
